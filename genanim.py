@@ -19,6 +19,6 @@ program += b'\x08' * (256 - len(program)) # Program padded with "end program" (\
 data = data + message + program
 f = open(sys.argv[1], 'wb')
 datalen = len(data) + 4 # Plus 4 bytes for the length itself
-f.write(struct.pack("<I", datalen))
+f.write(struct.pack("<i", -1))
 f.write(data)
 f.close()
