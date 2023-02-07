@@ -45,6 +45,11 @@ void animate(char *msg, unsigned char *program) {
             	{
             		mptr += (char)arg1;
             	}
+            	else
+            	{
+            		printf("Memory overflow error: mptr is trying to access other memory locations\n");
+			exit(1);
+            	}
                 break;
             case 0x04:
                 regs[arg2] = arg1;
