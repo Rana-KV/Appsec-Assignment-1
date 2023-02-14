@@ -55,8 +55,14 @@ void animate(char *msg, unsigned char *program) {
                 regs[arg2] = arg1;
                 break;
             case 0x05:
-                regs[arg1] ^= regs[arg2];
-                zf = !regs[arg1];
+            	if((arg1 <16) && (arg2<16)){
+            		regs[arg1] ^= regs[arg2];
+            		zf = !regs[arg1];
+            	}
+            	else{
+            		printf("Memory overflow error: access other memory locations through registers\n");
+			exit(1);
+            	}
                 break;
             case 0x06:
                 regs[arg1] += regs[arg2];
