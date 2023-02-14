@@ -12,13 +12,15 @@ data += struct.pack("<I", 8 + 32 + 256) # Record size (4 bytes)
 data += struct.pack("<I", 3)            # Record type (4 bytes)
 
 message = b"A"*31 + b'\x00'               # Note: 32 byte message
-program = b'\x03\xe1\x00'
-program += b'\x02\x00\x00\x03\xf8\x00' *13
+program = b'\x07\x00\x00'
+program += b'\x04\x01\x01'
+program += b'\x05\x02\x02'
+program += b'\x06\x02\x01'
 program += b'\x08' * (256 - len(program)) # Program padded with "end program" (\x08)
 
 data = data + message + program
 f = open(sys.argv[1], 'wb')
 datalen = len(data) + 4 # Plus 4 bytes for the length itself
-f.write(struct.pack("<i", -1))
+f.write(struct.pack("<i", datalen))
 f.write(data)
 f.close()
