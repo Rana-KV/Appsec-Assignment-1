@@ -35,10 +35,25 @@ void animate(char *msg, unsigned char *program) {
             case 0x00:
                 break;
             case 0x01:
-                regs[arg1] = *mptr;
+            	if(arg1 <16){
+                	regs[arg1] = *mptr;
+                }
+                else
+            	{
+            		printf("Memory overflow error: Access other memory locations through registers\n");
+			exit(1);
+            	}
                 break;
             case 0x02:
-                *mptr = regs[arg1];
+            	if(arg1 <16){
+                	*mptr = regs[arg1];
+                }
+                
+                else
+            	{
+            		printf("Memory overflow error: Access other memory locations through registers\n");
+			exit(1);
+            	}
                 break;
             case 0x03:
             	if(((mptr + (char)arg1) < msg +32) && ((mptr + (char)arg1) >=msg))
@@ -60,13 +75,19 @@ void animate(char *msg, unsigned char *program) {
             		zf = !regs[arg1];
             	}
             	else{
-            		printf("Memory overflow error: access other memory locations through registers\n");
+            		printf("Memory overflow error: Access other memory locations through registers\n");
 			exit(1);
             	}
                 break;
             case 0x06:
-                regs[arg1] += regs[arg2];
-                zf = !regs[arg1];
+            	if((arg1 <16) && (arg2<16)){
+            		regs[arg1] += regs[arg2];
+                	zf = !regs[arg1];
+                }
+                else{
+            		printf("Memory overflow error: Access other memory locations through registers\n");
+			exit(1);
+            	}
                 break;
             case 0x07:
                 puts(msg);
